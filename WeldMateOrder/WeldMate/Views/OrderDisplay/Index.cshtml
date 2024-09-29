@@ -1,0 +1,100 @@
+﻿<script>
+    function handleCancelAccept(itemid, status) {
+        $.ajax({
+            type: 'PUT',
+            url: 'http://weldmateapi.wiztechsolutions.co.in/api/Sales',
+            data: { Id: itemid, OrderStatus: status },
+            success: function addCell() {
+                debugger;
+                $('.dbtn_' + itemid).prop('disabled', true)
+                $('.cbtn_' + itemid).prop('disabled', true)
+            }
+        });
+    }
+</script>
+<div>
+    <h1>Orders for the Day</h1>
+</div>
+<div>
+    <table id="t01">
+        <thead>
+        <th>Bill Date</th>
+        <th>Customer Phone Number</th>
+        <th>Items</th>
+        <th></th>
+        <th></th>
+        </thead>
+        @foreach (var item in ViewBag.OrderDetails)
+        {
+            <tr>
+                <td>
+                    @item.BillDate.ToString("dd MMM yyyy")
+                </td>
+                <td>
+                    @item.Customer
+                </td>
+                <td>
+                    @foreach (var items in item.OrderEntryDetail)
+                    {
+                        <table border="0">
+                            <tr>
+                                <td>
+                                    @items.Item.ItemName
+                                </td>
+                                <td>
+                                    @items.Quantity
+                                </td>
+                            </tr>
+                        </table>
+                    }
+                </td>
+                <td>
+                    <button class='dbtn_@item.Id'  name='dbtn_@item.Id' onclick="handleCancelAccept('@item.Id',1)">Deliver</button>
+
+                </td>
+                <td>
+                    <button class='cbtn_@item.Id' onclick="handleCancelAccept('@item.Id',2)">Cancel</button>
+                </td>
+            </tr>
+
+        }
+
+    </table>
+</div>
+<style>
+    table#t01 {
+        width: 100%;
+        background-color: #f1f1c1;
+    }
+
+        table#t01 tr:nth-child(even) {
+            background-color: #e6d9cb;
+        }
+
+        table#t01 tr:nth-child(odd) {
+            background-color: #fff;
+        }
+
+        table#t01 th {
+            color: saddlebrown;
+            background-color: sandybrown;
+        }
+
+    table, th, td {
+        border: 1px solid black;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 15px;
+    }
+</style>

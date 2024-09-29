@@ -1,0 +1,3 @@
+@Imports TyrePark_Legacy.Areas.HelpPage.ModelDescriptions
+@ModelType SimpleTypeModelDescription
+@Model.Documentation
